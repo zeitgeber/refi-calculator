@@ -1,0 +1,25 @@
+name: Feature request
+description: Suggest a calculator improvement, simulation, share card, education page, or UI polish.
+title: "[Feature]: "
+labels: ["feature-request", "needs-review"]
+body:
+  - type: dropdown
+    id: request_type
+    attributes:
+      label: Request type
+      options:
+        - calculator improvement
+        - simulation mode
+        - bug report
+        - share card idea
+        - educational content idea
+        - UI improvement
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What should change?
+      description: Keep personal financial details out of public issues.
+    validations:
+      required: true

@@ -1,0 +1,18 @@
+name: Bug report
+description: Report incorrect behavior or confusing calculator output.
+title: "[Bug]: "
+labels: ["bug", "needs-review"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Do not include private financial details.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
