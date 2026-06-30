@@ -36,7 +36,7 @@ button:hover { filter: brightness(1.08); }
   color: white;
   background:
     linear-gradient(90deg, rgba(16, 25, 22, .88), rgba(16, 25, 22, .5)),
-    url("https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1800&q=80") center/cover;
+    url("assets/hero.webp") center/cover;
 }
 nav {
   display: flex;
