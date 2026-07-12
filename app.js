@@ -171,6 +171,7 @@ const render = () => {
   $("inputError").hidden = errors.length === 0;
   $("inputError").textContent = errors[0] || "";
   if (errors.length) {
+    $("loanDetails").open = true;
     $("summary").className = "verdict warn";
     $("summary").innerHTML = "<h2>Finish the inputs to see a refinance verdict</h2><p>We will not assume a missing value is $0 or 0%.</p>";
     $("metrics").innerHTML = ""; $("yearRows").innerHTML = ""; $("investRows").innerHTML = "";

@@ -90,11 +90,20 @@ h2, h3 { letter-spacing: 0; }
   padding: 1rem;
   box-shadow: 0 14px 45px rgba(30, 42, 36, .08);
 }
-.grid, .mini-grid {
+.grid, .quick-grid, .mini-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: .75rem;
 }
+.quick-grid { margin-bottom: 1rem; }
+.loan-details {
+  border-top: 1px solid var(--line);
+  padding-top: 1rem;
+}
+.loan-details summary {
+  font-size: 1rem;
+}
+.loan-details .grid { margin-top: 1rem; }
 label {
   display: grid;
   gap: .35rem;
@@ -280,7 +289,7 @@ footer {
   .calculator, .share, .education .shell { grid-template-columns: 1fr; }
   .advanced { grid-template-columns: 1fr; }
   .wide { grid-column: auto; }
-  .metrics, .grid, .mini-grid { grid-template-columns: 1fr; }
+  .metrics, .grid, .quick-grid, .mini-grid { grid-template-columns: 1fr; }
   nav { align-items: flex-start; flex-direction: column; }
   .hero { min-height: auto; padding-bottom: 2.5rem; }
   h1 { font-size: 2.35rem; line-height: 1.04; }

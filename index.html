@@ -35,42 +35,47 @@
     <main id="calculator" class="shell">
       <section class="calculator">
         <form id="inputs" class="panel">
-          <h2>Your loan</h2>
+          <h2>Start with these numbers</h2>
           <p id="inputError" class="input-error" role="alert" hidden></p>
-          <div class="grid">
+          <div class="quick-grid">
             <label>Home value <input name="homeValue" class="money-input" inputmode="numeric" value="$520,000"></label>
-            <label>Current balance method
+            <label id="knownBalance">Current loan balance <input name="balance" class="money-input" inputmode="numeric" value="$410,000"></label>
+            <label>Current loan rate <span><input name="currentRate" type="number" min="0" step="0.01" value="7.25">%</span></label>
+            <label>Refinance rate <span><input name="newRate" type="number" min="0" step="0.01" value="5.95">%</span></label>
+          </div>
+          <details id="loanDetails" class="loan-details">
+            <summary>Loan details and assumptions</summary>
+            <div class="grid">
+              <label>Current balance method
               <select name="balanceMode">
                 <option value="known">I know my current balance</option>
                 <option value="estimate">Estimate from original loan amount</option>
               </select>
-            </label>
-            <label id="knownBalance">Current loan balance <input name="balance" class="money-input" inputmode="numeric" value="$410,000"></label>
-            <label id="estimatedBalance" hidden>Original loan amount <input name="originalPrincipal" class="money-input" inputmode="numeric" value="$425,000"></label>
-            <label>Loan start
-              <span class="start-picker">
-                <select name="startMonth" aria-label="Loan start month">
-                  <option value="0">Jan</option><option value="1">Feb</option><option value="2">Mar</option><option value="3">Apr</option><option value="4">May</option><option value="5" selected>Jun</option>
-                  <option value="6">Jul</option><option value="7">Aug</option><option value="8">Sep</option><option value="9">Oct</option><option value="10">Nov</option><option value="11">Dec</option>
+              </label>
+              <label id="estimatedBalance" hidden>Original loan amount <input name="originalPrincipal" class="money-input" inputmode="numeric" value="$425,000"></label>
+              <label>Loan start
+                <span class="start-picker">
+                  <select name="startMonth" aria-label="Loan start month">
+                    <option value="0">Jan</option><option value="1">Feb</option><option value="2">Mar</option><option value="3">Apr</option><option value="4">May</option><option value="5" selected>Jun</option>
+                    <option value="6">Jul</option><option value="7">Aug</option><option value="8">Sep</option><option value="9">Oct</option><option value="10">Nov</option><option value="11">Dec</option>
+                  </select>
+                  <input name="startYear" type="number" min="1970" step="1" value="2023" aria-label="Loan start year">
+                </span>
+              </label>
+              <label>Current loan term <span><input name="currentTerm" list="loanTerms" type="number" min="1" step="1" value="30"> years</span></label>
+              <label>New refinance term <span><input name="newTerm" list="loanTerms" type="number" min="1" step="1" value="30"> years</span></label>
+              <label>Closing-cost source
+                <select name="closingCostMode">
+                  <option value="percent">Home-value estimate</option>
+                  <option value="detailed">Detailed fees below</option>
                 </select>
-                <input name="startYear" type="number" min="1970" step="1" value="2023" aria-label="Loan start year">
-              </span>
-            </label>
-            <label>Current loan rate <span><input name="currentRate" type="number" min="0" step="0.01" value="7.25">%</span></label>
-            <label>Current loan term <span><input name="currentTerm" list="loanTerms" type="number" min="1" step="1" value="30"> years</span></label>
-            <label>Refinance rate <span><input name="newRate" type="number" min="0" step="0.01" value="5.95">%</span></label>
-            <label>New refinance term <span><input name="newTerm" list="loanTerms" type="number" min="1" step="1" value="30"> years</span></label>
-            <label>Closing-cost source
-              <select name="closingCostMode">
-                <option value="percent">Home-value estimate</option>
-                <option value="detailed">Detailed fees below</option>
-              </select>
-            </label>
-            <label>Closing-cost estimate <span><input name="closingCostPct" type="number" min="0" step="0.05" value="1.5">%</span><small id="closingCostDollars">$7,800 estimated from home value</small></label>
-            <label>Expected time staying <span><input name="stayMonths" type="number" min="1" step="1" value="60"> months</span><small>Use 30 months for 2.5 years.</small></label>
-          </div>
-          <label class="check"><input name="rolledCosts" type="checkbox"> Roll closing costs into the new loan</label>
-          <label class="check"><input name="samePayoff" type="checkbox"> Keep the same payoff date instead of resetting the term</label>
+              </label>
+              <label>Closing-cost estimate <span><input name="closingCostPct" type="number" min="0" step="0.05" value="1.5">%</span><small id="closingCostDollars">$7,800 estimated from home value</small></label>
+              <label>Expected time staying <span><input name="stayMonths" type="number" min="1" step="1" value="60"> months</span><small>Use 30 months for 2.5 years.</small></label>
+            </div>
+            <label class="check"><input name="rolledCosts" type="checkbox"> Roll closing costs into the new loan</label>
+            <label class="check"><input name="samePayoff" type="checkbox"> Keep the same payoff date instead of resetting the term</label>
+          </details>
           <datalist id="loanTerms"><option value="15"><option value="20"><option value="30"></datalist>
           <div class="actions">
             <button type="button" id="downloadCard">Download share card</button>
@@ -103,7 +108,7 @@
         </table>
       </section>
 
-      <details class="panel" open>
+      <details class="panel">
         <summary>Advanced simulations</summary>
         <div class="advanced">
           <section>
