@@ -3,8 +3,14 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Refinance Calculator</title>
-    <meta name="description" content="A privacy-first refinance calculator for break-even months, target rates, true savings, and cash-in scenarios.">
+    <title>Refinance Break-Even Calculator | Refi Reckoner</title>
+    <meta name="description" content="Calculate refinance break-even, target mortgage rate, cash-flow savings, and total financial benefit before you get a quote.">
+    <link rel="canonical" href="https://refireckoner.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Refinance Break-Even Calculator | Refi Reckoner">
+    <meta property="og:description" content="Find the rate, closing cost, and timeline where refinancing starts making financial sense.">
+    <meta property="og:url" content="https://refireckoner.com/">
+    <meta property="og:image" content="https://refireckoner.com/assets/hero.webp">
     <meta name="google-adsense-account" content="ca-pub-4644873620547536">
     <link rel="stylesheet" href="styles.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4644873620547536" crossorigin="anonymous"></script>
@@ -15,14 +21,14 @@
         <strong>Refi Reckoner</strong>
         <div>
           <a href="#calculator">Calculator</a>
-          <a href="#education">How interest works</a>
+          <a href="#education">How it works</a>
           <a href="https://github.com/zeitgeber/refi-calculator/issues/new/choose" rel="noreferrer">Suggest a feature</a>
         </div>
       </nav>
       <section>
         <p class="eyebrow">Privacy-first refinance math</p>
         <h1>Does refinancing make sense today?</h1>
-        <p>Find the break-even month, target rate, true savings, and whether a lower payment is actually saving money.</p>
+        <p>Find the break-even month, target rate, cash-flow change, and total financial benefit before you get a quote.</p>
       </section>
     </header>
 
@@ -30,29 +36,46 @@
       <section class="calculator">
         <form id="inputs" class="panel">
           <h2>Your loan</h2>
+          <p id="inputError" class="input-error" role="alert" hidden></p>
           <div class="grid">
             <label>Home value <input name="homeValue" class="money-input" inputmode="numeric" value="$520,000"></label>
-            <label>Current loan balance <input name="balance" class="money-input" inputmode="numeric" value="$410,000"></label>
+            <label>Current balance method
+              <select name="balanceMode">
+                <option value="known">I know my current balance</option>
+                <option value="estimate">Estimate from original loan amount</option>
+              </select>
+            </label>
+            <label id="knownBalance">Current loan balance <input name="balance" class="money-input" inputmode="numeric" value="$410,000"></label>
+            <label id="estimatedBalance" hidden>Original loan amount <input name="originalPrincipal" class="money-input" inputmode="numeric" value="$425,000"></label>
             <label>Loan start
               <span class="start-picker">
                 <select name="startMonth" aria-label="Loan start month">
                   <option value="0">Jan</option><option value="1">Feb</option><option value="2">Mar</option><option value="3">Apr</option><option value="4">May</option><option value="5" selected>Jun</option>
                   <option value="6">Jul</option><option value="7">Aug</option><option value="8">Sep</option><option value="9">Oct</option><option value="10">Nov</option><option value="11">Dec</option>
                 </select>
-                <input name="startYear" type="number" min="1970" max="2026" step="1" value="2023" aria-label="Loan start year">
+                <input name="startYear" type="number" min="1970" step="1" value="2023" aria-label="Loan start year">
               </span>
             </label>
             <label>Current loan rate <span><input name="currentRate" type="number" min="0" step="0.01" value="7.25">%</span></label>
-            <label>Current loan term <span><input name="currentTerm" type="number" min="1" step="1" value="30"> years</span></label>
+            <label>Current loan term <span><input name="currentTerm" list="loanTerms" type="number" min="1" step="1" value="30"> years</span></label>
             <label>Refinance rate <span><input name="newRate" type="number" min="0" step="0.01" value="5.95">%</span></label>
-            <label>New refinance term <span><input name="newTerm" type="number" min="1" step="1" value="30"> years</span></label>
-            <label>Closing costs <span><input name="closingCostPct" type="number" min="0" step="0.05" value="1.5">%</span><small id="closingCostDollars">$7,800 estimated from home value</small></label>
-            <label>Expected time staying <span><input name="stayYears" type="number" min="1" step="1" value="5"> years</span></label>
+            <label>New refinance term <span><input name="newTerm" list="loanTerms" type="number" min="1" step="1" value="30"> years</span></label>
+            <label>Closing-cost source
+              <select name="closingCostMode">
+                <option value="percent">Home-value estimate</option>
+                <option value="detailed">Detailed fees below</option>
+              </select>
+            </label>
+            <label>Closing-cost estimate <span><input name="closingCostPct" type="number" min="0" step="0.05" value="1.5">%</span><small id="closingCostDollars">$7,800 estimated from home value</small></label>
+            <label>Expected time staying <span><input name="stayMonths" type="number" min="1" step="1" value="60"> months</span><small>Use 30 months for 2.5 years.</small></label>
           </div>
           <label class="check"><input name="rolledCosts" type="checkbox"> Roll closing costs into the new loan</label>
+          <label class="check"><input name="samePayoff" type="checkbox"> Keep the same payoff date instead of resetting the term</label>
+          <datalist id="loanTerms"><option value="15"><option value="20"><option value="30"></datalist>
           <div class="actions">
             <button type="button" id="downloadCard">Download share card</button>
           </div>
+          <small>Saved automatically on this device. Financial inputs stay in your browser; ads may use third-party technology.</small>
         </form>
 
         <section class="results">
@@ -73,7 +96,7 @@
               <th>Difference</th>
               <th>Current balance</th>
               <th>Refi balance</th>
-              <th>Cumulative savings</th>
+              <th>Net financial position</th>
             </tr>
           </thead>
           <tbody id="yearRows"></tbody>
@@ -102,6 +125,7 @@
               <label>Lender fees <input id="lenderFees" class="money-input" inputmode="numeric" value="$2,200"></label>
               <label>Prepaids <input id="prepaids" class="money-input" inputmode="numeric" value="$3,500"></label>
             </div>
+            <label class="check"><input id="includePrepaids" type="checkbox" checked> Include prepaids in the refinance comparison</label>
             <p id="costResult"></p>
           </section>
           <section>
@@ -130,6 +154,31 @@
             <label>Target monthly payment reduction <input id="targetReduction" class="money-input" inputmode="numeric" value="$500"></label>
             <label>Available cash-in amount <input id="availableCash" class="money-input" inputmode="numeric" value="$25,000"></label>
             <p id="cashInResult"></p>
+          </section>
+          <section>
+            <h3>Mortgage insurance</h3>
+            <label>Current monthly PMI <input id="currentPmi" class="money-input" inputmode="numeric" value="$0"></label>
+            <label>Refi monthly PMI <input id="refiPmi" class="money-input" inputmode="numeric" value="$0"></label>
+            <p>Optional fixed monthly estimates. Confirm when mortgage insurance ends with your lender.</p>
+          </section>
+          <section>
+            <h3>Pay principal instead</h3>
+            <p id="principalAlternative"></p>
+          </section>
+          <section>
+            <h3>Cash-out refinance</h3>
+            <label>Cash to take out <input id="cashOut" class="money-input" inputmode="numeric" value="$0"></label>
+            <p id="cashOutResult"></p>
+          </section>
+          <section>
+            <h3>Refinance readiness</h3>
+            <ul class="checklist">
+              <li>Confirm your payoff balance with the servicer.</li>
+              <li>Compare lender fees, title costs, and prepaids.</li>
+              <li>Check your credit, equity, and PMI impact.</li>
+              <li>Ask whether your current loan has a prepayment penalty.</li>
+              <li>Confirm how long you expect to keep this mortgage.</li>
+            </ul>
           </section>
         </div>
       </details>
@@ -161,6 +210,22 @@
           <p>Lenders may earn origination fees, closing costs, servicing income, interest over time, or sell the loan. A lower rate for you can still be a profitable new loan for them.</p>
         </article>
         <article>
+          <h3>A short example</h3>
+          <p>Suppose a homeowner has a $410,000 balance, 27 years left, and a 7.25% rate. A 5.95% refinance may lower the payment, but closing costs create an early loss. The right comparison is the new payment, fees, and both remaining balances at the date the homeowner expects to sell or refinance again.</p>
+        </article>
+        <article>
+          <h3>How this calculator estimates savings</h3>
+          <p>For every month, Refi Reckoner compares payments made plus balance still owed under the current loan and a refinance. The difference is a net financial position, not just cash left in a checking account. Taxes, insurance, lender credits, rate locks, and changing property values are outside this estimate.</p>
+        </article>
+        <article>
+          <h3>Assumptions to check</h3>
+          <p>Rates are fixed, payments are principal and interest only, and the home value does not change. Closing costs can be paid upfront or rolled into the balance. A lender’s final quote, payoff statement, and mortgage-insurance rules control the real transaction.</p>
+        </article>
+        <article>
+          <h3>Frequently asked questions</h3>
+          <p><strong>Does a lower payment always save money?</strong> No. A longer new term can lower the payment while increasing lifetime cost. <strong>What is LTV?</strong> Loan-to-value is your loan balance divided by home value. It helps lenders assess equity and may affect mortgage insurance. <strong>Is this a loan offer?</strong> No. It is an educational estimate.</p>
+        </article>
+        <article>
           <h3>Why refinancing can be good for both sides</h3>
           <p>Borrowers can win when interest savings and cash-flow benefits beat closing costs and term reset. Lenders can win by creating, retaining, selling, or servicing a new loan.</p>
         </article>
@@ -169,7 +234,7 @@
     </section>
 
     <footer class="shell">
-      <p>This calculator runs locally in your browser and is educational, not financial advice.</p>
+      <p>This calculator runs locally in your browser and is educational, not financial advice. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="rate-needed.html">What rate do I need?</a> · <a href="break-even.html">Refinance break-even guide</a></p>
     </footer>
 
     <script src="app.js"></script>

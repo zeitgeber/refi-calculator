@@ -12,6 +12,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 body {
   margin: 0;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -31,8 +32,8 @@ button {
 button:hover { filter: brightness(1.08); }
 
 .hero {
-  min-height: 72vh;
-  padding: 1.25rem clamp(1rem, 4vw, 4rem) 4rem;
+  min-height: 46vh;
+  padding: 1.25rem clamp(1rem, 4vw, 4rem) 3rem;
   color: white;
   background:
     linear-gradient(90deg, rgba(16, 25, 22, .88), rgba(16, 25, 22, .5)),
@@ -50,7 +51,7 @@ nav div { display: flex; flex-wrap: wrap; gap: 1rem; }
 nav a { text-decoration: none; opacity: .9; }
 .hero section {
   max-width: 760px;
-  margin: clamp(4rem, 13vh, 8rem) auto 0;
+  margin: clamp(2.5rem, 7vh, 4.5rem) auto 0;
 }
 .eyebrow {
   text-transform: uppercase;
@@ -60,7 +61,7 @@ nav a { text-decoration: none; opacity: .9; }
 }
 h1 {
   margin: 0;
-  font-size: clamp(3rem, 9vw, 6.8rem);
+  font-size: clamp(3rem, 7vw, 5.5rem);
   line-height: .92;
   letter-spacing: 0;
 }
@@ -79,7 +80,7 @@ h2, h3 { letter-spacing: 0; }
   display: grid;
   grid-template-columns: minmax(320px, 1fr) minmax(320px, .9fr);
   gap: 1rem;
-  margin-top: -3rem;
+  margin-top: -2rem;
   align-items: start;
 }
 .panel, .verdict, .table-wrap {
@@ -126,6 +127,13 @@ small { color: var(--muted); }
   margin: 1rem 0;
 }
 .check input { width: auto; }
+.input-error {
+  margin: 0 0 1rem;
+  padding: .75rem;
+  border-left: 4px solid var(--red);
+  color: #7a211c;
+  background: #f9e8e6;
+}
 .actions { display: flex; flex-wrap: wrap; gap: .6rem; }
 .actions button:last-child, .chips button {
   color: var(--ink);
@@ -174,6 +182,8 @@ small { color: var(--muted); }
   font-weight: 700;
 }
 .metric strong { font-size: 1.25rem; }
+.warnings, .checklist { padding-left: 1.25rem; }
+.warnings { color: #7a211c; }
 .ad {
   min-height: 92px;
   border: 1px dashed #a7b0ab;
@@ -215,6 +225,7 @@ summary {
   padding: 1rem;
   overflow-x: auto;
 }
+.advanced .check { margin: .8rem 0 0; }
 .wide { grid-column: span 2; }
 .chips {
   display: flex;
@@ -228,8 +239,10 @@ summary {
   gap: 1rem;
   align-items: center;
 }
+.share > * { min-width: 0; }
 canvas {
   width: 100%;
+  min-width: 0;
   height: auto;
   border-radius: 8px;
   border: 1px solid var(--line);
@@ -269,4 +282,13 @@ footer {
   .wide { grid-column: auto; }
   .metrics, .grid, .mini-grid { grid-template-columns: 1fr; }
   nav { align-items: flex-start; flex-direction: column; }
+  .hero { min-height: auto; padding-bottom: 2.5rem; }
+  h1 { font-size: 2.35rem; line-height: 1.04; }
+  .calculator { margin-top: -1rem; }
+  .table-wrap { overflow: visible; padding-right: 1rem; }
+  .table-wrap table, .table-wrap tbody, .table-wrap tr, .table-wrap td { display: block; min-width: 0; width: 100%; }
+  .table-wrap thead { display: none; }
+  .table-wrap tr { padding: .65rem 0; border-bottom: 1px solid var(--line); }
+  .table-wrap td { display: flex; justify-content: space-between; gap: 1rem; padding: .35rem 0; border: 0; text-align: right; white-space: normal; }
+  .table-wrap td::before { content: attr(data-label); color: var(--muted); font-weight: 700; text-align: left; }
 }
