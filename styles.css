@@ -273,6 +273,12 @@ canvas {
   border-radius: 8px;
   padding: 1rem;
 }
+.education.single .shell { display: block; max-width: 820px; }
+.education.single article { margin: 1rem 0; }
+.education.single p, .education.single li { line-height: 1.65; }
+.article-meta { color: var(--muted); font-size: .9rem; }
+.sources { padding-left: 1.25rem; }
+.guide-nav { margin: 1.25rem 0 0; display: flex; flex-wrap: wrap; gap: .75rem; }
 blockquote {
   margin: 0;
   padding: 1rem;
