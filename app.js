@@ -292,12 +292,6 @@ $("stayChips").addEventListener("click", (event) => {
     render();
   }
 });
-$("downloadCard").addEventListener("click", () => {
-  const a = document.createElement("a");
-  a.href = $("shareCanvas").toDataURL("image/png");
-  a.download = "refi-result.png";
-  a.click();
-});
 restoreState();
 document.querySelectorAll(".money-input").forEach(formatMoneyInput);
 render();
