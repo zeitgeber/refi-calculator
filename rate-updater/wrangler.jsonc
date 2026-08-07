@@ -1,0 +1,7 @@
+{
+  "name": "refireckoner-rate-updater",
+  "main": "src/index.js",
+  "compatibility_date": "2026-08-07",
+  "triggers": { "crons": ["17 18 * * 4"] },
+  "r2_buckets": [{ "binding": "RATES", "bucket_name": "refireckoner-rate-data" }]
+}

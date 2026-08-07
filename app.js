@@ -147,7 +147,8 @@ const wrapText = (x, text, left, top, maxWidth, lineHeight) => {
   return top + lineHeight;
 };
 const renderCard = (v, s, badge, twoYearRate) => {
-  const c = $("shareCanvas"), x = c.getContext("2d");
+  const c = $("shareCanvas"); if (!c) return;
+  const x = c.getContext("2d");
   const gradient = x.createLinearGradient(0, 0, c.width, c.height);
   gradient.addColorStop(0, "#fff3b0"); gradient.addColorStop(0.48, "#5eead4"); gradient.addColorStop(1, "#f472b6");
   x.fillStyle = gradient; x.fillRect(0, 0, c.width, c.height);
@@ -245,8 +246,9 @@ const render = () => {
   const cashOutPayment = payment(cashOutPrincipal, v.newRate, v.newTermMonths) + v.refiPmi;
   $("cashOutResult").innerHTML = cashOut > 0 ? `Taking <strong>${money(cashOut)}</strong> would make the new payment about <strong>${money(cashOutPayment)}/month</strong> and new LTV <strong>${((cashOutPrincipal / v.homeValue) * 100).toFixed(1)}%</strong>.` : "Enter cash to take out to see the payment and LTV impact.";
 
-  const captions = [`The stars say: refinance below ${twoYearRate ? pct(twoYearRate) : "a lower rate"}. Closing costs are in retrograde.`, `Level: Homeowner. Enemy: ${pct(v.currentRate)} mortgage. Loot: ${money(s.atHorizon)} net financial benefit.`, "My mortgage said: \"Lower monthly payment.\" The calculator said: \"Show me the closing costs.\"", `Estimated break-even: ${breakEvenLabel(s.breakEven)}. Estimated ${duration(v.horizonMonths)} benefit: ${money(s.atHorizon)}.`];
-  $("shareText").textContent = captions[Math.abs(Math.round(s.atHorizon)) % captions.length];
+  window.refiSnapshot = { ...v, ...s, twoYearRate };
+  const shareText = $("shareText");
+  if (shareText) shareText.textContent = `Estimated break-even: ${breakEvenLabel(s.breakEven)}.`;
   renderCard(v, s, badge, twoYearRate);
   saveState();
 };

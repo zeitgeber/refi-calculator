@@ -44,6 +44,7 @@
             <label>Current loan rate <span><input name="currentRate" type="number" min="0" step="0.01" value="7.25">%</span></label>
             <label>Refinance rate <span><input name="newRate" type="number" min="0" step="0.01" value="5.95">%</span></label>
           </div>
+          <p id="rateBenchmark" class="benchmark" hidden></p>
           <details id="loanDetails" class="loan-details">
             <summary>Loan details and assumptions</summary>
             <div class="grid">
@@ -79,7 +80,8 @@
           </details>
           <datalist id="loanTerms"><option value="15"><option value="20"><option value="30"></datalist>
           <div class="actions">
-            <button type="button" id="downloadCard">Download share card</button>
+            <button type="button" id="shareResult">Share result</button>
+            <button type="button" id="downloadCalendar">Download payment calendar (CSV)</button>
           </div>
           <small>Saved automatically on this device. Financial inputs stay in your browser; ads may use third-party technology.</small>
         </form>
@@ -188,14 +190,8 @@
           </section>
         </div>
       </details>
-
-      <section class="share panel">
-        <div>
-          <h2>Share card</h2>
-          <p id="shareText"></p>
-        </div>
-        <canvas id="shareCanvas" width="900" height="520" aria-label="Shareable refinance result card"></canvas>
-      </section>
+      <details class="panel"><summary>Compare two refinance quotes</summary><p>Enter the lender-controlled numbers from two Loan Estimates. Nothing leaves this browser.</p><div class="quote-grid"><section><h3>Quote A</h3><label>Lender <input id="quoteALender" value="Quote A"></label><label>Rate <span><input id="quoteARate" type="number" step="0.01" value="5.95">%</span></label><label>Term <span><input id="quoteATerm" type="number" value="30"> years</span></label><label>Closing costs <input id="quoteACosts" class="money-input" value="$7,800"></label></section><section><h3>Quote B</h3><label>Lender <input id="quoteBLender" value="Quote B"></label><label>Rate <span><input id="quoteBRate" type="number" step="0.01" value="6.10">%</span></label><label>Term <span><input id="quoteBTerm" type="number" value="30"> years</span></label><label>Closing costs <input id="quoteBCosts" class="money-input" value="$5,000"></label></section></div><p id="quoteResult"></p></details>
+      <section class="panel lender-help"><h2>Ask your lender</h2><ul id="lenderQuestions"></ul><p><strong>Get and compare quotes:</strong> <a href="https://www.bankrate.com/mortgages/mortgage-rates/" rel="noreferrer">Bankrate</a> · <a href="https://www.lendingtree.com/home/refinance/" rel="noreferrer">LendingTree</a> · <a href="https://better.com/refinance" rel="noreferrer">Better</a> · <a href="https://www.rocketmortgage.com/refinance" rel="noreferrer">Rocket Mortgage</a></p><p class="article-meta">No compensation is received for these links. Refi Reckoner does not rank or endorse lenders; rates and eligibility vary.</p></section>
 
       <div class="ad">Advertisement</div>
     </main>
@@ -244,6 +240,6 @@
       <p>This calculator runs locally in your browser and is educational, not financial advice. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="about.html">About & editorial policy</a> · <a href="rate-needed.html">What rate do I need?</a> · <a href="break-even.html">Refinance break-even guide</a></p>
     </footer>
 
-    <script src="app.js"></script>
+    <script src="app.js"></script><script src="engagement.js"></script>
   </body>
 </html>

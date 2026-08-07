@@ -144,6 +144,9 @@ small { color: var(--muted); }
   background: #f9e8e6;
 }
 .actions { display: flex; flex-wrap: wrap; gap: .6rem; }
+.benchmark { margin: 0 0 1rem; padding: .75rem; border-left: 4px solid var(--blue); background: #eef6fa; line-height: 1.45; }
+.quote-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.quote-grid section { padding: 1rem; border: 1px solid var(--line); border-radius: 8px; }
 .actions button:last-child, .chips button {
   color: var(--ink);
   background: white;
@@ -295,7 +298,7 @@ footer {
   .calculator, .share, .education .shell { grid-template-columns: 1fr; }
   .advanced { grid-template-columns: 1fr; }
   .wide { grid-column: auto; }
-  .metrics, .grid, .quick-grid, .mini-grid { grid-template-columns: 1fr; }
+  .metrics, .grid, .quick-grid, .mini-grid, .quote-grid { grid-template-columns: 1fr; }
   nav { align-items: flex-start; flex-direction: column; }
   .hero { min-height: auto; padding-bottom: 2.5rem; }
   h1 { font-size: 2.35rem; line-height: 1.04; }
