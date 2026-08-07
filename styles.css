@@ -225,6 +225,22 @@ summary {
   font-size: 1.35rem;
   font-weight: 800;
 }
+details.panel > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  list-style: none;
+}
+details.panel > summary::-webkit-details-marker { display: none; }
+details.panel > summary::after {
+  content: "Open +";
+  flex: 0 0 auto;
+  color: var(--green);
+  font-size: .85rem;
+  font-weight: 800;
+}
+details.panel[open] > summary::after { content: "Close -"; }
 .advanced {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
