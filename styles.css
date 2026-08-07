@@ -78,7 +78,7 @@ h2, h3 { letter-spacing: 0; }
 }
 .calculator {
   display: grid;
-  grid-template-columns: minmax(320px, 1fr) minmax(320px, .9fr);
+  grid-template-columns: minmax(320px, .85fr) minmax(380px, 1.15fr);
   gap: 1rem;
   margin-top: -2rem;
   align-items: start;
@@ -197,7 +197,7 @@ small { color: var(--muted); }
 .warnings, .checklist { padding-left: 1.25rem; }
 .warnings { color: #7a211c; }
 .ad {
-  min-height: 92px;
+  min-height: 64px;
   border: 1px dashed #a7b0ab;
   border-radius: 8px;
   display: grid;
